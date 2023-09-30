@@ -47,6 +47,7 @@ public class DataScraper {
         for (Element el: cardBlocks) {
             String interestRate;
             String header = el.selectFirst("h3").text();
+
             Element interestRateElement = el.selectFirst(".c-keto-product-card__driver-fee");
             Element filterElement = interestRateElement.selectFirst(".js-tooltip-wrapper");
 
