@@ -1,3 +1,6 @@
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +36,27 @@ public class TestDataScraper {
     }
 
     @Test
-    public void testDriverRequestFailure() {
+    public void testProductCardExists() {
+        // product cards contain interest rate data. They must exist for the program to work expectedly.
+        Document parsedHtml = Jsoup.parse(dataScraper.getHtmlContent());
+        Element cardBlock = parsedHtml.selectFirst(".c-block-product-card");
+        assertNotNull(cardBlock);
+    }
+
+    @Test
+    public void testWebDriverSetup(){
+        WebDriver driver = dataScraper.setupChromeDriver();
+        assertNotNull(driver);
+    }
+
+    @Test
+    public void testValidHtmlContent() {
+        // after parsing, htmlContent should not be null
+        assertNotNull(dataScraper.getHtmlContent());
+    }
+
+    @Test
+    public void testWebDriverRequestFailure() {
         ChromeOptions driverOptions = new ChromeOptions();
         driverOptions.addArguments("--headless");
         WebDriver webDriver = new ChromeDriver(driverOptions);
