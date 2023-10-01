@@ -1,3 +1,6 @@
+import customDataTypes.InterestRate;
+import customDataTypes.Money;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -8,7 +11,7 @@ public class Main {
 
         scraper.scrape();
         ArrayList<ArrayList<String>> interestData = scraper.getInterestData();
-        ArrayList<Float> interestRateFloats = scraper.getInterestRateFloats();
+        ArrayList<InterestRate> interestRateFloats = scraper.getInterestRates();
 
         String bankInfo;
         String rateInfo;
@@ -16,9 +19,9 @@ public class Main {
         System.out.println("--- BEST HYSA ACCOUNTS IN CANADA FOR 2023 ---");
         System.out.println("Enter a principal monetary amount as the first arg to see the growth, per account, up to 5 years\n");
         if (args.length == 1) {
-            float principal = Float.parseFloat(args[0]);
+            Money principal = new Money(Float.parseFloat(args[0]));
             int term = 5;
-            float rate;
+            InterestRate rate;
 
             for (int i=0; i < interestData.size(); i++) {
                 bankInfo = interestData.get(i).get(0);

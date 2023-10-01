@@ -1,35 +1,35 @@
-public class CompoundInterestCalculator {
-    private float interestRate;
-    private int term;
-    private float futureValue;
-    private float maxInterestEarned;
+import customDataTypes.InterestRate;
+import customDataTypes.Money;
+import graphql.org.antlr.v4.runtime.misc.IntervalSet;
 
-    public float getInterestRate() {
-        return roundFloat(interestRate);
+public class CompoundInterestCalculator {
+    private InterestRate interestRate;
+    private int term;
+    private Money futureValue;
+    private Money maxInterestEarned;
+
+    public InterestRate getInterestRate() {
+        return interestRate;
     }
 
     public int getTerm() {
         return term;
     }
 
-    public float getEstimatedGrowth() {
-        return roundFloat(interestRate);
+    public Money getMaxInterestEarned() {
+        return maxInterestEarned;
     }
 
-    public float getMaxInterestEarned() {
-        return roundFloat(maxInterestEarned);
+    public Money getFutureValue() {
+        return futureValue;
     }
 
-    public float getFutureValue() {
-        return roundFloat(futureValue);
-    }
-
-    public CompoundInterestCalculator(float interestRate, int term) {
+    public CompoundInterestCalculator(InterestRate interestRate, int term) {
         if (term < 0) {
             throw new IllegalArgumentException("A value of 0 or greater must be provided for the term");
         }
 
-        if (interestRate < 0f || interestRate >= 0.3f) {
+        if (interestRate.getAmount() < 0f || interestRate.getAmount() >= 0.3f) {
             throw new IllegalArgumentException("A value of 0 or greater but less than 0.3 must be provided for the term. " +
                     "Negative interest rates or rates above 0.3 go against historical context in Canada.");
         }
@@ -38,28 +38,24 @@ public class CompoundInterestCalculator {
         this.term = term;
     }
 
-    public float roundFloat(float f) {
-        return Math.round(f * 100.0f) / 100.0f;
-    }
-
-    public void calculateCompoundInterest(float principal) {
-        if(principal < 0) {
+    public void calculateCompoundInterest(Money principal) {
+        if(principal.getAmount() < 0) {
             throw new IllegalArgumentException("A positive principal must be provided");
         }
 
-        float interestRate = getInterestRate();
+        InterestRate interestRate = getInterestRate();
         int term = getTerm();
         futureValue = principal;
         System.out.println("--- Compounded Interest Projection Over " + term + " Years ---");
 
         for (int year = 1; year <= term; year++) {
-            maxInterestEarned = futureValue * interestRate;
-            futureValue += maxInterestEarned;
+            maxInterestEarned = futureValue.multiply(interestRate.getAmount());
+            futureValue = futureValue.add(maxInterestEarned);
 
-            System.out.println("Year " + year + " | Interest Rate: " + (interestRate * 100) + "%" + " | Interest Earned: $" + maxInterestEarned);
+            System.out.println("Year " + year + " | Interest Rate: " + interestRate + " | Interest Earned: " + maxInterestEarned.toString());
         }
 
-        System.out.println("Your total balance after " + term + " years with an initial principal of $" + principal +
-                " may be $" + futureValue);
+        System.out.println("Your total balance after " + term + " years with an initial principal of " + principal +
+                " may be " + futureValue.toString());
     }
 }

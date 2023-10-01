@@ -1,3 +1,4 @@
+import customDataTypes.InterestRate;
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 public class DataScraper {
     private ArrayList<ArrayList<String>> interestData = new ArrayList<>();
-    private ArrayList<Float> interestRateFloats = new ArrayList<>();
+    private ArrayList<InterestRate> interestRates = new ArrayList<>();
     private String path = System.getProperty("user.dir");
     private final String TARGET_URL = "https://www.nerdwallet.com/ca/banking/best-high-interest-savings-accounts";
     private String htmlContent;
@@ -19,8 +20,8 @@ public class DataScraper {
         return interestData;
     }
 
-    public ArrayList<Float> getInterestRateFloats() {
-        return interestRateFloats;
+    public ArrayList<InterestRate> getInterestRates() {
+        return interestRates;
     }
 
     public String getHtmlContent() {
@@ -71,7 +72,7 @@ public class DataScraper {
             headerRatePair = new ArrayList<>();
         }
 
-        computeInterestRateFloats();
+        computeInterestRateFloatsToInterestRates();
     }
 
     public String processInterestRateMarkup(Element element) {
@@ -87,11 +88,11 @@ public class DataScraper {
         return interestRate;
     }
 
-    public void computeInterestRateFloats() {
+    public void computeInterestRateFloatsToInterestRates() {
         for (ArrayList<String> pair : interestData) {
             String rateString = pair.get(1).replaceAll("[^0-9.]", "");
             float rate = Float.parseFloat(rateString)/100;
-            interestRateFloats.add(rate);
+            interestRates.add(new InterestRate(rate));
         }
     }
 }
