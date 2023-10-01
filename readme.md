@@ -4,3 +4,5 @@ run the command `./gradlew build` to build the project followed by `./gradlew ru
 To enter a console argument, use the command `--args="arg1 arg2 ..."`
 For example, to provide an argument of 20000 for the principal, execute
 the command `./gradlew runApp --args="20000"`
+
+To run JUnit test, run the command `./gradlew test`
