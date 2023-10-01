@@ -6,6 +6,9 @@ public class TestData {
     private final Money CONSTANT_PRINCIPAL = new Money(2000);
     private final int CONSTANT_TERM = 5;
 
+    private final boolean COMPOUNDED = true;
+    private final boolean GROWTH = false;
+
     private int validTerm = 1;
     private int negativeTerm = -1;
     private int zeroTerm = 0;
@@ -99,5 +102,13 @@ public class TestData {
 
     public Money getZeroPrincipal() {
         return zeroPrincipal;
+    }
+
+    public boolean isCompounded() {
+        return COMPOUNDED;
+    }
+
+    public boolean isGrowth() {
+        return GROWTH;
     }
 }

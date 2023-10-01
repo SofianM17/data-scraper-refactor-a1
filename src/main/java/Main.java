@@ -6,8 +6,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         DataScraper scraper = new DataScraper();
-        InterestGrowthCalculator growthCalculator;
-        CompoundInterestCalculator compoundedCalculator;
+        InterestCalculator interestCalculator;
 
         scraper.scrape();
         ArrayList<ArrayList<String>> interestData = scraper.getInterestData();
@@ -27,14 +26,13 @@ public class Main {
                 bankInfo = interestData.get(i).get(0);
                 rateInfo = interestData.get(i).get(1);
                 rate = interestRateFloats.get(i);
-                growthCalculator = new InterestGrowthCalculator(rate, term);
-                compoundedCalculator = new CompoundInterestCalculator(rate, term);
+                interestCalculator = new InterestCalculator(rate, term);
 
                 System.out.println("--------------------------------------------------\n");
                 System.out.println(bankInfo + "\n" + rateInfo + "\n");
-                growthCalculator.calculateGrowth(principal);
+                interestCalculator.calculateInterest(principal, false);
                 System.out.println("\n");
-                compoundedCalculator.calculateCompoundInterest(principal);
+                interestCalculator.calculateInterest(principal, true);
                 System.out.println("\n");
             }
         } else {

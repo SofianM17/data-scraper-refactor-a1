@@ -1,14 +1,14 @@
 import customDataTypes.InterestRate;
 import customDataTypes.Money;
 
-public class Calculator {
+public class InterestCalculator {
     private InterestRate interestRate;
     private Money initialPrincipal;
     private Money futureValue;
     private int term;
     private Money interestEarned;
 
-    public Calculator(InterestRate interestRate, int term) {
+    public InterestCalculator(InterestRate interestRate, int term) {
         if (term < 0) {
             throw new IllegalArgumentException("A value of 0 or greater must be provided for the term");
         }
