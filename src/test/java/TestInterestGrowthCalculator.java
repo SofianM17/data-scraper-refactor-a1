@@ -9,7 +9,7 @@ public class TestInterestGrowthCalculator extends TestCalculator {
         Money expectedFutureValue = new Money (2500f);
 
         // test futureValue with valid arguments
-        interestGrowthCalculator_constants.growthCalc(CONSTANT_PRINCIPAL);
+        interestGrowthCalculator_constants.calculateGrowth(CONSTANT_PRINCIPAL);
         assertEquals(expectedFutureValue.toString(), interestGrowthCalculator_constants.getFutureValue().toString());
     }
 
@@ -18,7 +18,7 @@ public class TestInterestGrowthCalculator extends TestCalculator {
         Money expectedInterestEarned = CONSTANT_PRINCIPAL.multiply(CONSTANT_RATE.getAmount());
 
         // test interestEarned with valid arguments
-        interestGrowthCalculator_constants.growthCalc(CONSTANT_PRINCIPAL);
+        interestGrowthCalculator_constants.calculateGrowth(CONSTANT_PRINCIPAL);
         assertEquals(expectedInterestEarned.toString(), interestGrowthCalculator_constants.getInterestEarned().toString());
     }
 }

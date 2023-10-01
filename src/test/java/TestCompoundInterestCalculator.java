@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestCompoundInterestCalculator extends TestCalculator{
+public class TestCompoundInterestCalculator extends TestCalculator {
     @Test
     public void testFutureValueConstants(){
         Money expectedFutureValue = new Money(2552.56f);
@@ -19,6 +19,6 @@ public class TestCompoundInterestCalculator extends TestCalculator{
 
         // test interestEarned with valid arguments
         compoundInterestCalculator_constants.calculateCompoundInterest(CONSTANT_PRINCIPAL);
-        assertEquals(expectedMaxInterestEarned.toString(), compoundInterestCalculator_constants.getMaxInterestEarned().toString());
+        assertEquals(expectedMaxInterestEarned.toString(), compoundInterestCalculator_constants.getInterestEarned().toString());
     }
 }

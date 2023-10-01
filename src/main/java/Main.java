@@ -32,7 +32,7 @@ public class Main {
 
                 System.out.println("--------------------------------------------------\n");
                 System.out.println(bankInfo + "\n" + rateInfo + "\n");
-                growthCalculator.growthCalc(principal);
+                growthCalculator.calculateGrowth(principal);
                 System.out.println("\n");
                 compoundedCalculator.calculateCompoundInterest(principal);
                 System.out.println("\n");

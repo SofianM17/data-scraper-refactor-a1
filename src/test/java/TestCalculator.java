@@ -77,11 +77,11 @@ public class TestCalculator {
         float uninitializedFloatVal = 0.0f;
 
         // test for invalid (negative) principal
-        assertThrows(IllegalArgumentException.class, () -> interestGrowthCalculator_constants.growthCalc(invalidPrincipal),
+        assertThrows(IllegalArgumentException.class, () -> interestGrowthCalculator_constants.calculateGrowth(invalidPrincipal),
                 "with negative principal = " + invalidPrincipal + ", expected IllegalArgumentException to be thrown");
 
         // if principal is valid, future value should not be the default of 0.0f
-        interestGrowthCalculator_constants.growthCalc(validPrincipal);
+        interestGrowthCalculator_constants.calculateGrowth(validPrincipal);
         assertNotEquals(uninitializedFloatVal, interestGrowthCalculator_constants.getFutureValue());
     }
 
@@ -89,17 +89,17 @@ public class TestCalculator {
     public void testFutureValueArgConditions() {
 
         // test futureValue with interest rate of 0
-        interestGrowthCalculator_zeroRate.growthCalc(CONSTANT_PRINCIPAL);
+        interestGrowthCalculator_zeroRate.calculateGrowth(CONSTANT_PRINCIPAL);
         assertEquals(CONSTANT_PRINCIPAL.toString(), interestGrowthCalculator_zeroRate.getFutureValue().toString(),
                 "with an interest rate of 0, futureValue is expected to match principal of " + CONSTANT_PRINCIPAL);
 
         //  test futureValue with a principal of 0
-        interestGrowthCalculator_constants.growthCalc(zeroPrincipal);
+        interestGrowthCalculator_constants.calculateGrowth(zeroPrincipal);
         assertEquals(zeroPrincipal.toString(), interestGrowthCalculator_constants.getFutureValue().toString(),
                 "with a principal of 0, futureValue is expected to match principal of 0");
 
         // test futureValue with a term of 0
-        interestGrowthCalculator_zeroTerm.growthCalc(CONSTANT_PRINCIPAL);
+        interestGrowthCalculator_zeroTerm.calculateGrowth(CONSTANT_PRINCIPAL);
         assertEquals(CONSTANT_PRINCIPAL.toString(), interestGrowthCalculator_zeroTerm.getFutureValue().toString(),
                 "with a term of 0, futureValue is expected to match principal of " + CONSTANT_PRINCIPAL);
     }
@@ -107,17 +107,17 @@ public class TestCalculator {
     @Test
     public void testInterestEarnedArgConditions() {
         // test interestEarned with interest rate of 0
-        interestGrowthCalculator_zeroRate.growthCalc(CONSTANT_PRINCIPAL);
+        interestGrowthCalculator_zeroRate.calculateGrowth(CONSTANT_PRINCIPAL);
         assertEquals(new Money(0).toString(), interestGrowthCalculator_zeroRate.getInterestEarned().toString(),
                 "with an interest rate of 0, interestEarned is expected to be 0");
 
         //  test interestEarned with a principal of 0
-        interestGrowthCalculator_constants.growthCalc(zeroPrincipal);
+        interestGrowthCalculator_constants.calculateGrowth(zeroPrincipal);
         assertEquals(new Money(0).toString(), interestGrowthCalculator_constants.getInterestEarned().toString(),
                 "with a principal of 0, interestEarned is expected to be 0");
 
         // test interestEarned with a term of 0
-        interestGrowthCalculator_zeroTerm.growthCalc(CONSTANT_PRINCIPAL);
+        interestGrowthCalculator_zeroTerm.calculateGrowth(CONSTANT_PRINCIPAL);
         assertEquals(new Money(0).toString(), interestGrowthCalculator_constants.getInterestEarned().toString(),
                 "with a term of 0, interestEarned is expected to be 0");
     }
