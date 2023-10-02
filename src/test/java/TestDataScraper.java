@@ -15,13 +15,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestDataScraper {
     private static DataScraper dataScraper;
-    private ArrayList<ArrayList<String>> interestData = dataScraper.getInterestData();
-    private ArrayList<InterestRate> interestRateFloats = dataScraper.getInterestRates();
+    private static ScrapedDataParser dataParser;
+    private ArrayList<ArrayList<String>> interestData = dataParser.getInterestData();
+    private ArrayList<InterestRate> interestRateFloats = dataParser.getInterestRates();
 
     @BeforeAll
     public static void scrapeData() {
         dataScraper = new DataScraper();
+        dataParser = new ScrapedDataParser();
+
         dataScraper.scrape();
+        dataParser.extractInterestData(dataScraper.getHtmlContent());
     }
 
     @Test

@@ -6,17 +6,22 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         DataScraper scraper = new DataScraper();
+        ScrapedDataParser dataParser = new ScrapedDataParser();
+
         InterestCalculator interestCalculator;
 
         scraper.scrape();
-        ArrayList<ArrayList<String>> interestData = scraper.getInterestData();
-        ArrayList<InterestRate> interestRateFloats = scraper.getInterestRates();
+        dataParser.extractInterestData(scraper.getHtmlContent());
+
+        ArrayList<ArrayList<String>> interestData = dataParser.getInterestData();
+        ArrayList<InterestRate> interestRateFloats = dataParser.getInterestRates();
 
         String bankInfo;
         String rateInfo;
 
         System.out.println("--- BEST HYSA ACCOUNTS IN CANADA FOR 2023 ---");
         System.out.println("Enter a principal monetary amount as the first arg to see the growth, per account, up to 5 years\n");
+
         if (args.length == 1) {
             Money principal = new Money(Float.parseFloat(args[0]));
             int term = 5;

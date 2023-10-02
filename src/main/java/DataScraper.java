@@ -1,28 +1,11 @@
-import customDataTypes.InterestRate;
-import org.jsoup.*;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 public class DataScraper {
-    private ArrayList<ArrayList<String>> interestData = new ArrayList<>();
-    private ArrayList<InterestRate> interestRates = new ArrayList<>();
     private String path = System.getProperty("user.dir");
     private final String TARGET_URL = "https://www.nerdwallet.com/ca/banking/best-high-interest-savings-accounts";
     private String htmlContent;
-
-    public ArrayList<ArrayList<String>> getInterestData() {
-        return interestData;
-    }
-
-    public ArrayList<InterestRate> getInterestRates() {
-        return interestRates;
-    }
 
     public String getHtmlContent() {
         return htmlContent;
@@ -53,46 +36,5 @@ public class DataScraper {
         }
 
         setHtmlContent(driver.getPageSource());
-
-        Document doc = Jsoup.parse(getHtmlContent());
-        extractInterestData(doc);
-    }
-
-    public void extractInterestData(Document parsedHtml) {
-        ArrayList<String> headerRatePair = new ArrayList<>();
-
-        Elements cardBlocks = parsedHtml.select(".c-block-product-card");
-
-        for (Element el: cardBlocks) {
-            String interestRate = processInterestRateMarkup(el);
-            String header = el.selectFirst("h3").text();
-
-            headerRatePair.addAll(Arrays.asList(header, interestRate));
-            interestData.add(headerRatePair);
-            headerRatePair = new ArrayList<>();
-        }
-
-        computeInterestRateFloatsToInterestRates();
-    }
-
-    public String processInterestRateMarkup(Element element) {
-        Element interestRateElement = element.selectFirst(".c-keto-product-card__driver-fee");
-        Element filterElement = interestRateElement.selectFirst(".js-tooltip-wrapper");
-
-        String interestRate = interestRateElement.text();
-
-        if (filterElement != null) {
-            interestRate = interestRateElement.text().replace(filterElement.text(), "");
-        }
-
-        return interestRate;
-    }
-
-    public void computeInterestRateFloatsToInterestRates() {
-        for (ArrayList<String> pair : interestData) {
-            String rateString = pair.get(1).replaceAll("[^0-9.]", "");
-            float rate = Float.parseFloat(rateString)/100;
-            interestRates.add(new InterestRate(rate));
-        }
     }
 }
